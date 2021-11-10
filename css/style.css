@@ -1,0 +1,173 @@
+:root {
+    --card-height: 190px;
+    --card-width: 120px;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, rgba(0,255,235,1), rgba(0,228,255,1));
+    color: white;
+}
+
+.find-a-pair-game__container {
+    position: relative;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.find-a-pair-game__title {
+    text-shadow: 0 0 5px grey;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.find-a-pair-game {
+    opacity: 0;
+    position: relative;
+    display: grid;
+    padding: 1rem;
+    gap: 1rem;
+    grid-template-columns: repeat(4, var(--card-width));
+    grid-template-rows: repeat(4, var(--card-height));
+}
+
+.find-a-pair-game.active {
+    animation: game-fade-in 1.5s forwards;
+}
+
+.find-a-pair-game__card {
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px 2px rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: 1s ease-in-out;
+    transform-style: preserve-3d;
+}
+
+.find-a-pair-game__card.active {
+    pointer-events: none;
+    transform: rotateY(180deg);
+    animation: card-flip 1s;
+}
+
+.find-a-pair-game__card.found {
+    transform: rotateY(180deg);
+    pointer-events: none;
+    animation: found-card-fade-out 1s forwards;
+}
+
+.find-a-pair-game__card-item {
+    border-radius: 5px;
+    height: var(--card-height);
+    width: var(--card-width);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+}
+
+.find-a-pair-game__card--front {
+    background: linear-gradient(120deg, rgb(0, 175, 161), rgb(0, 148, 165));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 6rem;
+}
+
+.find-a-pair-game__card--back {
+    position: absolute;
+    transform: rotateY(180deg);
+}
+
+.new-game-btn {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background: linear-gradient(120deg, rgb(0, 175, 161), rgb(0, 148, 165));
+    border: 0;
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 2rem;
+    width: 250px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 1s ease-in-out;
+    z-index: 2;
+}
+
+.new-game-btn.active {
+    animation: btn-fade-in 1.5s forwards;
+}
+
+@keyframes game-fade-in {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+@keyframes btn-fade-in {
+    0% {
+        transform: translate(-50%, calc(-50% - 20px));
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+
+@keyframes found-card-fade-out {
+    0% {
+        transform: translateY(0) rotateY(180deg);
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(-10px) rotateY(180deg);
+        opacity: 0
+    }
+}
+
+@keyframes card-flip {
+    0% {
+        transform: perspective(1000px) rotateY(0) translateZ(0);
+        box-shadow: 0 5px 5px 2px rgba(255, 255, 255, 0.4);
+    }
+    20% {
+        transform: perspective(1000px) rotateY(0) translateZ(40px);
+        box-shadow: 0 5px 15px 5px rgba(255, 255, 255, 0.3);
+    }
+    80% {
+        transform: perspective(1000px) rotateY(180deg) translateZ(-40px);
+        box-shadow: 0 5px 15px 5px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        transform: perspective(1000px) rotateY(180deg) translateZ(0);
+        box-shadow: 0 5px 5px 2px rgba(255, 255, 255, 0.4);
+    }
+}
